@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -6,77 +6,11 @@
 <title>Lu's Tarot - Trải Bài 3 Lá</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A0C14'/%3E%3Crect width='32' height='32' rx='8' fill='none' stroke='%23E8C96A' stroke-opacity='0.25'/%3E%3Cpath d='M19.2 7.2A9.2 9.2 0 1 0 19.2 24.8A6.8 6.8 0 1 1 19.2 7.2Z' fill='%23E8C96A'/%3E%3Cpath d='M23.6 10.2 L24 11.4 L25.2 11.8 L24 12.2 L23.6 13.4 L23.2 12.2 L22 11.8 L23.2 11.4 Z' fill='%23E8C96A'/%3E%3Ctext x='10.5' y='20.2' font-family='serif' font-size='12' font-weight='700' fill='white'%3EL%3C/text%3E%3Ctext x='16' y='20.2' font-family='sans-serif' font-size='5' font-weight='600' fill='white' opacity='0.9'%3Eu%3C/text%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230A0C14'/%3E%3Cpath d='M19.2 7.2A9.2 9.2 0 1 0 19.2 24.8A6.8 6.8 0 1 1 19.2 7.2Z' fill='%23E8C96A'/%3E%3C/svg%3E">
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.tailwindcss.com" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap&subset=vietnamese" rel="stylesheet">
-<style>
-:root{ --gold:#E8C96A; --gold-soft:#F2D57E; --bg:#0A0C14; --card:#121527; --line:rgba(255,255,255,0.07)}
-*{font-family:'Be Vietnam Pro',system-ui,sans-serif}
-.font-display{font-family:'Fraunces',serif}
-body{ background:var(--bg); overflow-x:hidden; -webkit-font-smoothing:antialiased }
-.bg-ambient{
-  background:
-    radial-gradient(700px 420px at 50% -8%, rgba(232,201,106,0.08), transparent 60%),
-    radial-gradient(900px 600px at 100% 0%, rgba(99,102,241,0.07), transparent 60%),
-    linear-gradient(180deg, #0E1120 0%, #0A0C14 55%, #0A0C14 100%);
-}
-.minimal-border{ border:1px solid var(--line) }
-.glass-minimal{
-  background:rgba(255,255,255,0.035);
-  border:1px solid rgba(255,255,255,0.07);
-  backdrop-filter: blur(14px);
-}
-.card-shell{ width:118px; height:192px; border-radius:18px; position:relative; cursor:pointer; transform-style:preserve-3d }
-@media(min-width:640px){ .card-shell{width:136px;height:220px} }
-@media(min-width:1024px){ .card-shell{width:148px;height:238px} }
-.card-inner{ width:100%;height:100%; position:relative; transform-style:preserve-3d; transition:transform 0.8s cubic-bezier(0.23,1,0.32,1); border-radius:18px }
-.card-shell.flipped .card-inner{ transform:rotateY(180deg) }
-.card-face{ position:absolute; inset:0; backface-visibility:hidden; border-radius:18px; overflow:hidden }
-.card-back{
-  background:
-    radial-gradient(240px 180px at 50% 28%, rgba(232,201,106,0.16), transparent 70%),
-    linear-gradient(165deg, #1A1E33 0%, #16192E 55%, #111427 100%);
-  border:1px solid rgba(232,201,106,0.22);
-  box-shadow:0 10px 28px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
-  display:flex;align-items:center;justify-content:center;
-}
-.card-back::before{ content:''; position:absolute; inset:10px; border:1px solid rgba(232,201,106,0.18); border-radius:13px; pointer-events:none }
-.card-front{
-  transform:rotateY(180deg);
-  background:#FFFCF0;
-  border:1px solid rgba(232,201,106,0.35);
-  box-shadow:0 14px 36px rgba(0,0,0,0.35);
-  display:flex;flex-direction:column; color:#1A1730;
-}
-.card-front.reversed{ transform:rotateY(180deg) rotate(180deg) }
-.fan-card{ position:absolute; left:50%; top:18px; transition:filter 0.2s }
-.fan-card:hover{ z-index:50 !important; filter:brightness(1.05) }
-.fan-card:hover .card-back{ border-color:rgba(232,201,106,0.5); box-shadow:0 16px 36px rgba(0,0,0,0.45), 0 0 0 1px rgba(232,201,106,0.2) inset }
-/* equal height fix */
-#stageCard .grid{ align-items:stretch }
-.slot{ width:100%; max-width:156px; aspect-ratio:156/250; height:auto; display:flex; align-items:stretch; min-height:0 }
-@media(min-width:640px){ .slot{ max-width:160px } }
-@media(max-width:640px){ .slot{ max-width: none } }
-.slot, .slot .card-shell, .slot .card-inner, .slot .card-front{ min-height:0; min-width:0 }
-.slot .card-shell{ flex:1; width:100% !important; height:100% !important; min-height:0 }
-.slot .card-front{ overflow:hidden }
-#resultsGrid{ align-items:stretch; grid-auto-rows:1fr }
-#resultsGrid > div{ height:100% }
-.slot-inner{
-  width:100%;height:100%; border-radius:18px; border:1.4px dashed rgba(232,201,106,0.18);
-  background:rgba(255,255,255,0.02); display:flex;align-items:center;justify-content:center; position:relative; transition:all 0.3s
-}
-.slot.filled .slot-inner{ border-style:solid; border-color:rgba(232,201,106,0.32); background:rgba(255,255,255,0.04) }
-.progress-dot{ width:32px; height:3px; border-radius:999px; background:rgba(255,255,255,0.12); transition:all 0.3s }
-.progress-dot.active{ background:var(--gold); }
-.progress-dot.done{ background:rgba(232,201,106,0.7) }
-.logo-mark{
-  background: linear-gradient(135deg, #1A1E33, #0F1220);
-  border:1px solid rgba(232,201,106,0.25);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
-}
-</style>
-</head>
+<link rel="preload" href="css/main.css" as="style"><link rel="stylesheet" href="css/main.css">
+<meta name="description" content="Lu's Tarot Atelier - Trải bài Tarot 3 lá trực giác, 78 lá Rider-Waite, giải nghĩa Quá khứ Hiện tại Tương lai."><meta name="theme-color" content="#0A0C14"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://cdn.tailwindcss.com"><link rel="preconnect" href="https://cdnjs.cloudflare.com"></head>
 <body class="bg-ambient min-h-screen text-white selection:bg-[#E8C96A] selection:text-slate-900">
 <!-- Header minimal -->
 <header class="sticky top-0 z-30 backdrop-blur-xl bg-[#0A0C14]/75 border-b border-white/[0.06]">
@@ -102,20 +36,17 @@ body{ background:var(--bg); overflow-x:hidden; -webkit-font-smoothing:antialiase
         <div class="text-[11px] tracking-[0.14em] font-medium text-white/45">Trực giác - Chiêm nghiệm</div>
       </div>
     </a>
-    <div class="flex items-center gap-2">
-      <span class="hidden sm:inline-flex items-center gap-1.5 text-[11px] text-white/45"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 3 lá • Past - Present - Future</span>
-      <button id="headerReset" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full minimal-border bg-white/[0.04] hover:bg-white/[0.08] text-[12px] font-medium text-white/80 transition">
-        <span class="text-[13px]">↻</span> <span class="hidden sm:inline">Làm mới</span>
-      </button>
-    </div>
+    <button id="headerReset" class="hidden" aria-hidden="true"></button>
   </div>
 </header>
 
 <main class="max-w-[980px] mx-auto px-4 sm:px-6 pb-16">
   <!-- Hero minimal -->
   <div class="text-center pt-10 sm:pt-14 pb-6">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full minimal-border bg-white/[0.03] text-[11px] tracking-[0.14em] font-medium text-white/60">
-      <span class="w-1 h-1 rounded-full bg-[#E8C96A]"></span> LU'S TAROT - TRẢI BÀI 3 LÁ
+    <div class="inline-flex items-center gap-3">
+      <span class="hidden sm:block h-px w-8 bg-gradient-to-r from-transparent to-[#E8C96A]/30"></span>
+      <span class="px-4 py-1.5 rounded-full bg-[#E8C96A]/10 border border-[#E8C96A]/25 text-[11px] tracking-[0.22em] font-semibold text-[#E8C96A] shadow-[0_0_16px_rgba(232,201,106,0.12)]">TRẢI BÀI 3 LÁ</span>
+      <span class="hidden sm:block h-px w-8 bg-gradient-to-l from-transparent to-[#E8C96A]/30"></span>
     </div>
     <h1 class="font-display font-bold tracking-[-0.03em] text-[30px] sm:text-[40px] lg:text-[44px] leading-[1.05] mt-4">
       Lắng nghe <span class="text-[#E8C96A] font-light italic">trực giác</span><br class="sm:hidden"> qua 3 lá bài
@@ -130,46 +61,41 @@ body{ background:var(--bg); overflow-x:hidden; -webkit-font-smoothing:antialiase
     <div class="flex items-center gap-2">
       <div class="progress-dot active" id="dot1"></div>
       <div class="progress-dot" id="dot2"></div>
-      <div class="progress-dot" id="dot3"></div>
     </div>
     <div class="flex items-center gap-3 text-[11px] tracking-[0.1em] font-medium">
       <span id="step1Label" class="text-[#E8C96A]">XÀO BÀI</span>
       <span class="text-white/20">/</span>
-      <span id="step2Label" class="text-white/30">CHỌN 3 LÁ</span>
-      <span class="text-white/20">/</span>
-      <span id="step3Label" class="text-white/30">GIẢI BÀI</span>
+      <span id="step2Label" class="text-white/30">GIẢI BÀI</span>
     </div>
   </div>
 
-  <!-- Instruction minimal -->
-  <div id="instructionBox" class="glass-minimal rounded-2xl px-4 sm:px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-    <div class="flex gap-3">
-      <div class="w-8 h-8 rounded-full bg-[#E8C96A]/10 border border-[#E8C96A]/20 flex items-center justify-center text-[#E8C96A] text-[12px] shrink-0 mt-0.5 sm:mt-0">✦</div>
-      <div>
-        <div id="instructionTitle" class="text-[13px] font-semibold text-white leading-tight">Sẵn sàng cho hành trình nhỏ?</div>
-        <div id="instructionText" class="text-[12.5px] text-white/50 leading-relaxed mt-0.5">Nhấn “Xào bài & Trải bài” để bắt đầu. Hít sâu và nghĩ về câu hỏi của bạn.</div>
-      </div>
-    </div>
+  <!-- Instruction minimal (hidden, kept for logic) -->
+  <div id="instructionBox" class="hidden">
+    <div id="instructionTitle" class="hidden">Sẵn sàng cho hành trình nhỏ?</div>
+    <div id="instructionText" class="hidden">Nhấn “Xào bài & Trải bài” để bắt đầu. Hít sâu và nghĩ về câu hỏi của bạn.</div>
     <span id="pickCounter" class="hidden px-3 py-1 rounded-full bg-white text-slate-900 text-xs font-semibold shrink-0">Đã chọn 0/3</span>
     <span id="questionBadge" class="hidden px-3 py-1 rounded-full bg-[#E8C96A] text-slate-900 text-xs font-semibold"></span>
   </div>
 
-  <!-- Question minimal -->
-  <div id="questionBox" class="mt-3 glass-minimal rounded-2xl p-2">
-    <input id="questionInput" placeholder="Bạn muốn hỏi điều gì? (ví dụ: Con đường sự nghiệp sắp tới...)" class="w-full px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-[13px] placeholder:text-white/30 focus:outline-none focus:border-[#E8C96A]/30 focus:bg-white/[0.06] transition">
+  <!-- Question - redesigned to match -->
+  <div id="questionBox" class="mt-4">
+    <div class="relative group">
+      <div class="absolute left-3.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-[#E8C96A]/10 border border-[#E8C96A]/15 flex items-center justify-center text-[#E8C96A] text-[11px] pointer-events-none group-focus-within:bg-[#E8C96A]/15 group-focus-within:border-[#E8C96A]/25 transition">✦</div>
+      <input id="questionInput" placeholder="Bạn muốn hỏi điều gì? (ví dụ: Con đường sự nghiệp sắp tới...)" class="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white/[0.035] border border-white/[0.07] text-[13px] placeholder:text-white/30 text-white focus:outline-none focus:border-[#E8C96A]/30 focus:bg-white/[0.05] focus:shadow-[0_0_0_3px_rgba(232,201,106,0.08)] transition">
+    </div>
   </div>
 
   <!-- Stage minimal -->
   <div class="mt-6">
-    <div id="stageCard" class="glass-minimal rounded-[24px] sm:rounded-[28px] p-4 sm:p-7 pb-6 sm:pb-8 relative overflow-visible">
+    <div id="stageCard" class="glass-minimal rounded-2xl p-4 sm:p-7 pb-6 sm:pb-8 relative overflow-visible">
       <!-- Deck view -->
-      <div id="deckView" class="relative flex flex-col items-center py-6 sm:py-8">
+      <div id="deckView" class="relative flex flex-col items-center py-5 sm:py-6">
         <div id="deckStack" class="relative w-[160px] h-[210px] sm:w-[180px] sm:h-[238px]"></div>
-        <button id="shuffleBtn" class="mt-7 group inline-flex items-center gap-2.5 px-7 py-3 rounded-full bg-[#E8C96A] text-slate-900 font-semibold text-[14px] hover:bg-[#F2D57E] hover:scale-[1.01] active:scale-[0.99] transition">
+        <button id="shuffleBtn" class="mt-6 group inline-flex items-center gap-2.5 px-7 py-3 rounded-full bg-[#E8C96A] text-slate-900 font-semibold text-[14px] hover:bg-[#F2D57E] hover:scale-[1.01] active:scale-[0.99] transition">
           <span class="w-6 h-6 rounded-full bg-slate-900 text-[#E8C96A] flex items-center justify-center text-[11px]">✦</span>
           Xào bài & Trải bài
         </button>
-        <p class="text-[11px] tracking-[0.12em] font-medium text-white/30 mt-3">BỘ BÀI ĐẦY ĐỦ - 78 LÁ • 22 ẨN CHÍNH + 56 ẨN PHỤ</p>
+
       </div>
 
       <!-- Fan view -->
@@ -178,33 +104,33 @@ body{ background:var(--bg); overflow-x:hidden; -webkit-font-smoothing:antialiase
           <p class="text-white/80 text-[13px] font-medium">Hãy tập trung và chọn 3 lá bài trực giác nhất</p>
           <span class="hidden sm:inline text-[11px] text-white/30">Di chuột để xem • Nhấn để chọn</span>
         </div>
-        <div id="fanContainer" class="relative w-full h-[250px] sm:h-[300px] overflow-visible flex justify-center"></div>
-        <p class="text-center text-[11px] text-white/30 sm:hidden mt-2">Chạm để chọn - 3 lá</p>
+        <div id="fanViewport" class="relative w-full overflow-x-auto overflow-y-visible scrollbar-hide cursor-grab active:cursor-grabbing select-none rounded-xl border border-white/5 bg-white/[0.02]" style="scrollbar-width:none;-ms-overflow-style:none;">
+          <div id="fanContainer" class="relative h-[250px] sm:h-[300px] mx-auto flex justify-center" style="min-width:760px; width:900px;"></div>
+        </div>
+        <p class="text-center text-[11px] text-white/30 mt-2">Kéo ngang để xem thêm bài <span class="hidden sm:inline">• Chạm để chọn - 3 lá</span><span class="sm:hidden">• Chạm để chọn - 3 lá</span></p>
       </div>
 
       <!-- Slots minimal  -->
-      <div class="mt-10 sm:mt-12">
+      <div class="mt-6 sm:mt-8">
         <div class="grid grid-cols-3 gap-2.5 sm:gap-5 max-w-[560px] mx-auto items-start">
           <div class="flex flex-col items-center gap-2">
-            <div id="slot-0" class="slot"><div class="slot-inner flex-col gap-1"><span class="text-[10px] tracking-[0.14em] font-semibold text-white/25">01</span><span class="slot-label">CHỜ CHỌN</span></div></div>
+            <div id="slot-0" class="slot"><div class="slot-inner flex-col gap-1"><span class="text-[10px] tracking-[0.14em] font-semibold text-white/25">01</span><span class="text-[9px] tracking-[0.16em] font-semibold text-[#E8C96A]/70">CHỜ CHỌN</span></div></div>
             <div class="text-center"><div class="text-[11px] font-semibold tracking-[0.08em] text-white/70">QUÁ KHỨ</div><div class="text-[11px] text-white/30">Gốc rễ</div></div>
           </div>
           <div class="flex flex-col items-center gap-2">
-            <div id="slot-1" class="slot"><div class="slot-inner flex-col gap-1"><span class="text-[10px] tracking-[0.14em] font-semibold text-white/25">02</span><span class="slot-label">CHỜ CHỌN</span></div></div>
+            <div id="slot-1" class="slot"><div class="slot-inner flex-col gap-1"><span class="text-[10px] tracking-[0.14em] font-semibold text-white/25">02</span><span class="text-[9px] tracking-[0.16em] font-semibold text-[#E8C96A]/70">CHỜ CHỌN</span></div></div>
             <div class="text-center"><div class="text-[11px] font-semibold tracking-[0.08em] text-white/70">HIỆN TẠI</div><div class="text-[11px] text-white/30">Thử thách</div></div>
           </div>
           <div class="flex flex-col items-center gap-2">
-            <div id="slot-2" class="slot"><div class="slot-inner flex-col gap-1"><span class="text-[10px] tracking-[0.14em] font-semibold text-white/25">03</span><span class="slot-label">CHỜ CHỌN</span></div></div>
+            <div id="slot-2" class="slot"><div class="slot-inner flex-col gap-1"><span class="text-[10px] tracking-[0.14em] font-semibold text-white/25">03</span><span class="text-[9px] tracking-[0.16em] font-semibold text-[#E8C96A]/70">CHỜ CHỌN</span></div></div>
             <div class="text-center"><div class="text-[11px] font-semibold tracking-[0.08em] text-white/70">TƯƠNG LAI</div><div class="text-[11px] text-white/30">Lời khuyên</div></div>
           </div>
         </div>
 
-        <div class="flex flex-col items-center gap-3 mt-8 sm:mt-10 pt-4 relative z-10 clear-both">
-          <button id="revealBtn" disabled class="px-7 py-3 rounded-full font-semibold text-[13px] bg-white/[0.06] text-white/25 border border-white/10 cursor-not-allowed transition inline-flex items-center gap-2 relative z-10">
-            <span>✧</span> Lật bài <span class="text-[11px] font-normal opacity-60">(cần 3 lá)</span>
-          </button>
-          <button id="resetBtn" class="hidden px-5 py-2 rounded-full minimal-border bg-white text-slate-900 text-[13px] font-semibold hover:bg-zinc-100 transition relative z-10">↻ Rút bài lượt mới</button>
-          <p id="hintText" class="text-[11px] text-white/25 text-center relative z-10">Chọn đủ 3 lá để mở khóa - mỗi lá 50% xuôi / ngược</p>
+        <div class="hidden">
+          <button id="revealBtn" disabled class="hidden">Lật bài</button>
+          <button id="resetBtn" class="hidden">Rút bài lượt mới</button>
+          <p id="hintText" class="hidden">hint</p>
         </div>
       </div>
     </div>
@@ -218,9 +144,11 @@ body{ background:var(--bg); overflow-x:hidden; -webkit-font-smoothing:antialiase
       </div>
       <div id="overallBox" class="glass-minimal rounded-2xl p-5 sm:p-6 mb-6"></div>
       <div id="resultsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
-      <div class="flex justify-center mt-8">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
         <button id="readAgainBtn" class="px-7 py-3 rounded-full bg-white text-slate-900 font-semibold text-[13px] hover:bg-zinc-100 transition inline-flex items-center gap-2">↻ Trải bài mới</button>
+        <button id="copyGptBtn" class="px-6 py-3 rounded-full bg-white/10 border border-white/15 text-white font-medium text-[13px] hover:bg-white/15 transition inline-flex items-center gap-2"><span class="text-[14px]">⎘</span> Copy hỏi AI</button>
       </div>
+      <p id="copyToast" class="hidden text-center text-[11px] text-emerald-400 mt-2">Đã copy - dán sang ChatGPT nhé!</p>
       <p class="text-center text-[11px] text-[#E8C96A]/70 mt-3 leading-relaxed max-w-[560px] mx-auto">Lưu ý: Kết quả Tarot chỉ mang tính tham khảo, giải trí và chiêm nghiệm - không phản ánh thực tế tuyệt đối, hãy đón nhận với tâm trí cởi mở và tự đưa ra quyết định của riêng bạn.</p>
     </div>
   </div>
@@ -237,391 +165,6 @@ body{ background:var(--bg); overflow-x:hidden; -webkit-font-smoothing:antialiase
 
 <div id="flyLayer" class="fixed inset-0 pointer-events-none z-50"></div>
 
-<script>
-const tarotCards = [
-  {id:0, name:"The Fool", vietnameseName:"Kẻ Khờ", symbol:"○", upright:{meaning:"Bạn đang đứng trước một khởi đầu mới đầy tự do và tiềm năng. Quá khứ đã khép lại, vũ trụ mời gọi bạn bước đi với niềm tin trong sáng, dám thử, dám mơ. Đây là lúc buông bỏ sợ hãi và lắng nghe tiếng gọi phiêu lưu của tâm hồn.", yesNo:"YES", keywords:["Khởi đầu mới","Tự do","Niềm tin","Phiêu lưu"]}, reversed:{meaning:"Bạn đang do dự, sợ rủi ro hoặc hành động thiếu suy nghĩ. Kẻ Khờ ngược cảnh báo sự liều lĩnh mù quáng, trì hoãn hoặc bỏ lỡ cơ hội vì thiếu chuẩn bị. Hãy dừng lại, cân nhắc kỹ trước khi nhảy.", yesNo:"NO", keywords:["Liều lĩnh","Do dự","Thiếu chuẩn bị","Bỏ lỡ"]}},
-  {id:1, name:"The Magician", vietnameseName:"Nhà Ảo Thuật", symbol:"∞", upright:{meaning:"Bạn có đủ công cụ, kỹ năng và ý chí để biến ý tưởng thành hiện thực. Đây là thời điểm hành động tập trung, tận dụng tài nguyên và khẳng định năng lực bản thân.", yesNo:"YES", keywords:["Sáng tạo","Ý chí","Biến ước mơ thành thật","Tập trung"]}, reversed:{meaning:"Năng lượng bị phân tán, thiếu tự tin hoặc có sự thao túng. Bạn có thể đang lạm dụng tài năng hoặc bị người khác dẫn dắt. Cần trung thực với bản thân và dùng sức mạnh đúng chỗ.", yesNo:"MAYBE", keywords:["Thao túng","Thiếu định hướng","Lãng phí tài năng","Ảo tưởng"]}},
-  {id:2, name:"The High Priestess", vietnameseName:"Nữ Tư Tế", symbol:"☽", upright:{meaning:"Trực giác của bạn đang rất mạnh. Hãy lắng nghe tiếng nói bên trong, giữ sự bí ẩn và kiên nhẫn chờ đợi sự thật hé lộ. Tri thức ẩn sâu sẽ dẫn đường.", yesNo:"MAYBE", keywords:["Trực giác","Bí ẩn","Tiềm thức","Khôn ngoan"]}, reversed:{meaning:"Bạn đang phớt lờ trực giác, giữ bí mật quá mức hoặc cảm thấy mất kết nối với nội tâm. Hãy mở lòng, chia sẻ và tin vào cảm nhận của mình.", yesNo:"NO", keywords:["Mất trực giác","Bí mật","Cô lập","Hoang mang"]}},
-  {id:3, name:"The Empress", vietnameseName:"Nữ Hoàng", symbol:"♀", upright:{meaning:"Sự trù phú, nuôi dưỡng và sáng tạo đang nở rộ. Tình cảm, tài chính và các dự án đều có cơ hội phát triển tươi tốt nếu bạn chăm sóc bằng yêu thương.", yesNo:"YES", keywords:["Trù phú","Nuôi dưỡng","Sáng tạo","Yêu thương"]}, reversed:{meaning:"Sự phụ thuộc, thiếu tự chăm sóc hoặc sáng tạo bị kìm hãm. Bạn có thể đang cho đi quá nhiều mà quên bản thân. Cần cân bằng cho-nhận.", yesNo:"NO", keywords:["Phụ thuộc","Kiệt sức","Bế tắc sáng tạo","Thiếu cân bằng"]}},
-  {id:4, name:"The Emperor", vietnameseName:"Hoàng Đế", symbol:"♔", upright:{meaning:"Kỷ luật, cấu trúc và lãnh đạo giúp bạn làm chủ tình huống. Đã đến lúc lập kế hoạch rõ ràng, đặt ranh giới và hành động với trách nhiệm.", yesNo:"YES", keywords:["Kỷ luật","Ổn định","Lãnh đạo","Cấu trúc"]}, reversed:{meaning:"Cứng nhắc, kiểm soát quá mức hoặc thiếu kỷ luật. Quyền lực có thể bị lạm dụng hoặc bạn đang chống lại hệ thống. Hãy linh hoạt hơn.", yesNo:"NO", keywords:["Độc đoán","Cứng nhắc","Mất kiểm soát","Thiếu kỷ luật"]}},
-  {id:5, name:"The Hierophant", vietnameseName:"Giáo Hoàng", symbol:"✠", upright:{meaning:"Truyền thống, niềm tin và người thầy xuất hiện. Học hỏi từ hệ thống, tôn trọng quy tắc và tìm kiếm sự hướng dẫn tâm linh sẽ giúp bạn vững bước.", yesNo:"MAYBE", keywords:["Truyền thống","Niềm tin","Hướng dẫn","Giáo dục"]}, reversed:{meaning:"Bạn đang thách thức chuẩn mực, cảm thấy gò bó bởi khuôn mẫu hoặc thiếu người dẫn đường. Đã đến lúc tự định nghĩa con đường riêng.", yesNo:"NO", keywords:["Phá cách","Gò bó","Hoài nghi","Nổi loạn"]}},
-  {id:6, name:"The Lovers", vietnameseName:"Tình Nhân", symbol:"♥", upright:{meaning:"Lựa chọn từ trái tim và sự hòa hợp. Tình yêu, đối tác hoặc quyết định quan trọng cần sự chân thành và đồng điệu giá trị. Lắng nghe con tim.", yesNo:"YES", keywords:["Tình yêu","Hòa hợp","Lựa chọn","Đồng điệu"]}, reversed:{meaning:"Mất cân bằng trong mối quan hệ, lựa chọn sai lệch hoặc xung đột giá trị. Cần trung thực về điều mình thực sự muốn.", yesNo:"NO", keywords:["Bất hòa","Lựa chọn sai","Mất cân bằng","Thiếu chân thành"]}},
-  {id:7, name:"The Chariot", vietnameseName:"Cỗ Xe", symbol:"➤", upright:{meaning:"Quyết tâm và ý chí đưa bạn tiến nhanh về đích. Kiểm soát cảm xúc, giữ hướng đi và bạn sẽ chiến thắng thử thách.", yesNo:"YES", keywords:["Quyết tâm","Chiến thắng","Kiểm soát","Tiến lên"]}, reversed:{meaning:"Mất phương hướng, thiếu kiểm soát hoặc quá hung hăng. Bạn có thể đang cố quá sức hoặc đi chệch đường. Hãy phanh lại và định hướng lại.", yesNo:"NO", keywords:["Mất lái","Thiếu định hướng","Hung hăng","Trì hoãn"]}},
-  {id:8, name:"Strength", vietnameseName:"Sức Mạnh", symbol:"🦁", upright:{meaning:"Sức mạnh nội tâm, lòng can đảm dịu dàng và sự kiên nhẫn sẽ giúp bạn thuần hóa khó khăn. Hãy mềm mại nhưng kiên định.", yesNo:"YES", keywords:["Can đảm","Kiên nhẫn","Nội lực","Dịu dàng"]}, reversed:{meaning:"Tự nghi ngờ, kiệt sức hoặc kiểm soát cảm xúc kém. Bạn đang thiếu tự tin hoặc dùng sức mạnh sai cách. Cần sạc lại năng lượng.", yesNo:"MAYBE", keywords:["Tự ti","Kiệt sức","Mất kiểm soát","Sợ hãi"]}},
-  {id:9, name:"The Hermit", vietnameseName:"Ẩn Sĩ", symbol:"◐", upright:{meaning:"Đã đến lúc rút lui, chiêm nghiệm và tìm ánh sáng nội tâm. Sự cô độc có chủ đích giúp bạn hiểu rõ bản thân và con đường phía trước.", yesNo:"NO", keywords:["Chiêm nghiệm","Cô độc","Tìm kiếm","Ánh sáng nội tâm"]}, reversed:{meaning:"Cô lập quá mức, sợ cô đơn hoặc tránh né sự thật. Bạn có thể đang tách mình khỏi người khác quá lâu. Hãy mở cửa trở lại.", yesNo:"NO", keywords:["Cô lập","Trốn tránh","Mất phương hướng","Khép kín"]}},
-  {id:10, name:"Wheel of Fortune", vietnameseName:"Vòng Quay Vận Mệnh", symbol:"◎", upright:{meaning:"Vận mệnh đang xoay chuyển có lợi cho bạn. Chu kỳ mới, cơ hội bất ngờ và may mắn đang đến. Hãy đón nhận thay đổi với niềm tin.", yesNo:"YES", keywords:["Vận may","Chu kỳ","Thay đổi","Cơ hội"]}, reversed:{meaning:"Vận xui tạm thời, kháng cự thay đổi hoặc chu kỳ trì trệ. Mọi thứ có vẻ ngoài tầm kiểm soát - hãy kiên nhẫn và thích nghi.", yesNo:"NO", keywords:["Vận xui","Trì trệ","Kháng cự","Bất ổn"]}},
-  {id:11, name:"Justice", vietnameseName:"Công Lý", symbol:"⚖", upright:{meaning:"Sự thật và công bằng được thực thi. Quyết định cần dựa trên lý trí, bằng chứng và đạo đức. Gieo gì gặt nấy.", yesNo:"YES", keywords:["Công bằng","Sự thật","Trách nhiệm","Cân bằng"]}, reversed:{meaning:"Bất công, thiên vị hoặc trốn tránh trách nhiệm. Bạn có thể đang tự dối mình hoặc chịu hệ quả từ lựa chọn thiếu công bằng.", yesNo:"NO", keywords:["Bất công","Thiên vị","Trốn tránh","Mất cân bằng"]}},
-  {id:12, name:"The Hanged Man", vietnameseName:"Người Treo Ngược", symbol:"⁂", upright:{meaning:"Tạm dừng để nhìn mọi thứ từ góc khác. Buông bỏ, hy sinh nhỏ cho bài học lớn và chờ thời điểm thích hợp sẽ mang lại giác ngộ.", yesNo:"MAYBE", keywords:["Buông bỏ","Góc nhìn mới","Tạm dừng","Giác ngộ"]}, reversed:{meaning:"Trì hoãn vô ích, hy sinh không được ghi nhận hoặc sợ thay đổi góc nhìn. Bạn đang kháng cự việc buông bỏ cần thiết.", yesNo:"NO", keywords:["Trì trệ","Hy sinh vô ích","Kháng cự","Mắc kẹt"]}},
-  {id:13, name:"Death", vietnameseName:"Cái Chết", symbol:"✕", upright:{meaning:"Kết thúc cần thiết để tái sinh. Buông bỏ cái cũ, lột xác và chào đón chuyển hóa mạnh mẽ. Đây không phải mất mát mà là làm mới.", yesNo:"NO", keywords:["Chuyển hóa","Kết thúc","Tái sinh","Buông bỏ"]}, reversed:{meaning:"Sợ thay đổi, bám víu quá khứ hoặc chuyển hóa bị trì hoãn. Bạn đang kháng cự sự kết thúc cần thiết khiến bản thân mắc kẹt.", yesNo:"NO", keywords:["Sợ thay đổi","Bám víu","Trì hoãn","Mắc kẹt"]}},
-  {id:14, name:"Temperance", vietnameseName:"Tiết Độ", symbol:"≋", upright:{meaning:"Cân bằng, điều độ và hòa hợp là chìa khóa. Pha trộn các khía cạnh đối lập, kiên nhẫn và giữ trung dung sẽ mang lại bình an.", yesNo:"MAYBE", keywords:["Cân bằng","Điều độ","Hòa hợp","Kiên nhẫn"]}, reversed:{meaning:"Mất cân bằng, thái quá hoặc thiếu kiên nhẫn. Bạn đang dao động giữa hai cực đoan. Cần tiết chế và tìm nhịp điệu riêng.", yesNo:"NO", keywords:["Mất cân bằng","Thái quá","Thiếu kiên nhẫn","Lệch lạc"]}},
-  {id:15, name:"The Devil", vietnameseName:"Ác Quỷ", symbol:"⛧", upright:{meaning:"Cảnh báo về ràng buộc, cám dỗ hoặc mô thức độc hại. Bạn có thể đang bị trói bởi nỗi sợ, vật chất hoặc mối quan hệ không lành mạnh. Nhận diện để thoát ra.", yesNo:"NO", keywords:["Ràng buộc","Cám dỗ","Phụ thuộc","Bóng tối"]}, reversed:{meaning:"Giải phóng khỏi xiềng xích, nhận thức được sự phụ thuộc và bắt đầu buông bỏ. Bạn đang lấy lại quyền tự chủ.", yesNo:"YES", keywords:["Giải phóng","Tỉnh thức","Buông bỏ","Tự chủ"]}},
-  {id:16, name:"The Tower", vietnameseName:"Tòa Tháp", symbol:"⚡", upright:{meaning:"Sự sụp đổ đột ngột để lộ sự thật. Cấu trúc giả tạo sụp đổ, dù sốc nhưng mở đường cho nền móng chân thật hơn.", yesNo:"NO", keywords:["Sụp đổ","Thức tỉnh","Biến động","Giải phóng"]}, reversed:{meaning:"Tránh được thảm họa trong gang tấc hoặc sợ sụp đổ nên trì hoãn thay đổi. Đôi khi bạn đang kháng cự cú sốc cần thiết.", yesNo:"MAYBE", keywords:["Trì hoãn sụp đổ","Sợ thay đổi","Kháng cự","Căng thẳng"]}},
-  {id:17, name:"The Star", vietnameseName:"Ngôi Sao", symbol:"✶", upright:{meaning:"Hy vọng, chữa lành và niềm tin trở lại. Sau giông bão, ánh sao dẫn đường cho bạn với sự bình yên và cảm hứng mới.", yesNo:"YES", keywords:["Hy vọng","Chữa lành","Niềm tin","Cảm hứng"]}, reversed:{meaning:"Mất niềm tin, thất vọng hoặc cảm thấy lạc lối. Ánh sao vẫn đó nhưng bạn chưa nhìn thấy. Hãy chăm sóc niềm tin nhỏ bé trong tim.", yesNo:"MAYBE", keywords:["Mất hy vọng","Thất vọng","Lạc lối","Thiếu niềm tin"]}},
-  {id:18, name:"The Moon", vietnameseName:"Mặt Trăng", symbol:"☾", upright:{meaning:"Trực giác, giấc mơ và điều ẩn giấu nổi lên. Mọi thứ chưa rõ ràng, hãy tin vào cảm nhận và cẩn trọng với ảo ảnh.", yesNo:"MAYBE", keywords:["Trực giác","Ảo ảnh","Tiềm thức","Bí ẩn"]}, reversed:{meaning:"Ảo ảnh tan biến, sự thật dần lộ ra nhưng vẫn còn hoang mang. Bạn đang thoát khỏi nỗi sợ vô hình.", yesNo:"NO", keywords:["Vỡ mộng","Hoang mang","Giải ảo","Lo âu"]}},
-  {id:19, name:"The Sun", vietnameseName:"Mặt Trời", symbol:"☀", upright:{meaning:"Niềm vui, thành công và năng lượng rực rỡ. Mọi thứ sáng rõ, bạn được vũ trụ chúc phúc với sự lạc quan và thành tựu.", yesNo:"YES", keywords:["Niềm vui","Thành công","Rực rỡ","Lạc quan"]}, reversed:{meaning:"Niềm vui bị che mờ tạm thời, thiếu tự tin hoặc thành công đến chậm. Ánh mặt trời vẫn ở đó - chỉ cần bạn mở rèm.", yesNo:"YES", keywords:["Che mờ","Thiếu tự tin","Trì hoãn vui vẻ","Tự ti"]}},
-  {id:20, name:"Judgement", vietnameseName:"Phán Xét", symbol:"♫", upright:{meaning:"Tiếng gọi thức tỉnh, tha thứ và tái sinh. Đã đến lúc nhìn lại, buông bỏ phán xét cũ và bước sang chương mới với sự rõ ràng.", yesNo:"YES", keywords:["Thức tỉnh","Tái sinh","Tha thứ","Tiếng gọi"]}, reversed:{meaning:"Tự phán xét quá khắt khe, bỏ lỡ tiếng gọi hoặc sợ thay đổi. Bạn đang trì hoãn sự tha thứ cho bản thân.", yesNo:"NO", keywords:["Tự phán xét","Bỏ lỡ","Sợ thay đổi","Trì hoãn"]}},
-  {id:21, name:"The World", vietnameseName:"Thế Giới", symbol:"◉", upright:{meaning:"Hoàn thành, viên mãn và hội nhập. Một chu kỳ khép lại trọn vẹn, bạn sẵn sàng bước sang tầm cao mới với sự toàn vẹn.", yesNo:"YES", keywords:["Hoàn thành","Viên mãn","Hội nhập","Thành tựu"]}, reversed:{meaning:"Chưa hoàn tất, thiếu khép lại hoặc cảm giác dang dở. Bạn gần đích nhưng cần thêm một bước cuối để trọn vẹn.", yesNo:"MAYBE", keywords:["Dang dở","Chưa hoàn tất","Thiếu khép lại","Trì hoãn"]}},
-];
-// gán image cho 22 Ẩn Chính (Rider-Waite Wikimedia - Special:FilePath)
-const majorFiles = ["RWS_Tarot_00_Fool.jpg","RWS_Tarot_01_Magician.jpg","RWS_Tarot_02_High_Priestess.jpg","RWS_Tarot_03_Empress.jpg","RWS_Tarot_04_Emperor.jpg","RWS_Tarot_05_Hierophant.jpg","RWS_Tarot_06_Lovers.jpg","RWS_Tarot_07_Chariot.jpg","RWS_Tarot_08_Strength.jpg","RWS_Tarot_09_Hermit.jpg","RWS_Tarot_10_Wheel_of_Fortune.jpg","RWS_Tarot_11_Justice.jpg","RWS_Tarot_12_Hanged_Man.jpg","RWS_Tarot_13_Death.jpg","RWS_Tarot_14_Temperance.jpg","RWS_Tarot_15_Devil.jpg","RWS_Tarot_16_Tower.jpg","RWS_Tarot_17_Star.jpg","RWS_Tarot_18_Moon.jpg","RWS_Tarot_19_Sun.jpg","RWS_Tarot_20_Judgement.jpg","RWS_Tarot_21_World.jpg"];
-tarotCards.forEach(c => {
-  if (c.id <= 21) c.image = `https://commons.wikimedia.org/wiki/Special:FilePath/${majorFiles[c.id]}`;
-});
-// --- Ẩn Phụ (Minor Arcana) - 56 lá, tự động sinh ---
-(() => {
-  const suits = [
-    {en:"Wands", vi:"Gậy", sym:"♣", theme:"lửa, hành động và đam mê"},
-    {en:"Cups", vi:"Cốc", sym:"♥", theme:"nước, cảm xúc và tình yêu"},
-    {en:"Swords", vi:"Kiếm", sym:"♠", theme:"khí, tư duy và sự thật"},
-    {en:"Pentacles", vi:"Tiền", sym:"♦", theme:"đất, vật chất và ổn định"},
-  ];
-  const ranks = [
-    {en:"Ace", vi:"Át", kwU:["Khởi đầu","Cơ hội","Tiềm năng"], kwR:["Trì hoãn","Bỏ lỡ","Thiếu khởi sắc"], meanU:"khởi đầu thuần khiết và cơ hội mới đang mở ra", meanR:"cơ hội bị trì hoãn hoặc thiếu động lực để bắt đầu"},
-    {en:"Two", vi:"Hai", kwU:["Cân bằng","Lựa chọn","Hợp tác"], kwR:["Mất cân bằng","Do dự","Lệch hướng"], meanU:"cần cân bằng và đưa ra lựa chọn hợp tác", meanR:"mất cân bằng, do dự giữa hai hướng"},
-    {en:"Three", vi:"Ba", kwU:["Phát triển","Hợp tác","Mở rộng"], kwR:["Trì trệ","Thiếu hợp tác","Cô lập"], meanU:"sự hợp tác và nền tảng đang phát triển tích cực", meanR:"thiếu hợp tác, phát triển bị đình trệ"},
-    {en:"Four", vi:"Bốn", kwU:["Ổn định","Nền tảng","Nghỉ ngơi"], kwR:["Bế tắc","Gò bó","Bất ổn"], meanU:"sự ổn định và củng cố nền tảng", meanR:"cảm giác bế tắc, gò bó hoặc nền tảng lung lay"},
-    {en:"Five", vi:"Năm", kwU:["Xung đột","Thử thách","Mất mát"], kwR:["Hòa giải","Tránh né","Hồi phục"], meanU:"xung đột và thử thách đòi hỏi đối diện", meanR:"xung đột dần được hòa giải hoặc đang tránh né đối diện"},
-    {en:"Six", vi:"Sáu", kwU:["Hài hòa","Chia sẻ","Hồi phục"], kwR:["Bất bình đẳng","Vong ơn","Mất cân bằng cho nhận"], meanU:"sự hài hòa, cho nhận cân bằng và hồi phục", meanR:"cho nhận mất cân bằng, cảm giác bất công"},
-    {en:"Seven", vi:"Bảy", kwU:["Kiên trì","Đánh giá","Thử thách"], kwR:["Nản lòng","Thiếu kiên nhẫn","Bỏ cuộc"], meanU:"cần kiên trì đánh giá và bảo vệ thành quả", meanR:"thiếu kiên trì, dễ nản hoặc muốn bỏ cuộc"},
-    {en:"Eight", vi:"Tám", kwU:["Nỗ lực","Chuyển động","Tiến triển"], kwR:["Trì trệ","Kiệt sức","Thiếu tập trung"], meanU:"nỗ lực không ngừng và tiến triển rõ rệt", meanR:"cảm giác kiệt sức, tiến trình bị trì trệ"},
-    {en:"Nine", vi:"Chín", kwU:["Kiên nhẫn","Gần đích","Viên mãn"], kwR:["Bất an","Thiếu kiên nhẫn","Cô đơn"], meanU:"gần đạt viên mãn, cần kiên nhẫn thêm chút nữa", meanR:"bất an, thiếu kiên nhẫn dù đã gần đích"},
-    {en:"Ten", vi:"Mười", kwU:["Kết thúc","Thành tựu","Gánh nặng"], kwR:["Quá tải","Buông bỏ","Kết thúc khó"], meanU:"kết thúc một chu kỳ, vừa thành tựu vừa gánh nặng", meanR:"quá tải, khó buông bỏ hoặc kết thúc nặng nề"},
-    {en:"Page", vi:"Cậu Bé", kwU:["Tò mò","Tin tức","Học hỏi"], kwR:["Thiếu chín chắn","Trì hoãn tin tức","Non nớt"], meanU:"tin tức mới, sự tò mò và ham học hỏi", meanR:"thiếu chín chắn, tin tức chậm hoặc học hỏi hời hợt"},
-    {en:"Knight", vi:"Hiệp Sĩ", kwU:["Hành động","Đam mê","Tốc độ"], kwR:["Vội vã","Thiếu kiên định","Hung hăng"], meanU:"hành động quyết liệt, đam mê theo đuổi mục tiêu", meanR:"hành động vội vã, thiếu kiên định hoặc hung hăng"},
-    {en:"Queen", vi:"Nữ Hoàng", kwU:["Nuôi dưỡng","Thành thạo","Trực giác"], kwR:["Kiểm soát","Thiếu tự tin","Phụ thuộc"], meanU:"năng lượng nuôi dưỡng, thành thạo và trực giác tinh tế", meanR:"kiểm soát quá mức hoặc thiếu tự tin vào khả năng"},
-    {en:"King", vi:"Vua", kwU:["Làm chủ","Lãnh đạo","Ổn định"], kwR:["Độc đoán","Thiếu trách nhiệm","Lạm quyền"], meanU:"sự làm chủ, lãnh đạo vững vàng và ổn định", meanR:"độc đoán, lạm quyền hoặc thiếu trách nhiệm"},
-  ];
-  const numMap = {Ace:"01", Two:"02", Three:"03", Four:"04", Five:"05", Six:"06", Seven:"07", Eight:"08", Nine:"09", Ten:"10", Page:"11", Knight:"12", Queen:"13", King:"14"};
-  const filePrefixMap = {Wands:"Wands", Cups:"Cups", Swords:"Swords", Pentacles:"Pents"};
-  let id = 22;
-  for (const s of suits) {
-    for (const r of ranks) {
-      const isWandsCups = s.en==="Wands" || s.en==="Cups";
-      let yesU = isWandsCups ? "YES" : "MAYBE";
-      if (["Five","Seven","Eight","Nine"].includes(r.en)) yesU = "MAYBE";
-      if (["Page","Knight"].includes(r.en)) yesU = "YES";
-      const yesR = isWandsCups ? "MAYBE" : "NO";
-      const uprightMean = `Năng lượng ${s.theme} kết hợp với ${r.meanU}. Lá ${r.vi} ${s.vi} cho thấy giai đoạn liên quan đến ${s.vi.toLowerCase()} đang được kích hoạt, mang đến cơ hội để bạn thể hiện và cân bằng.`;
-      const reversedMean = `Khi ngược, lá ${r.vi} ${s.vi} cho thấy ${r.meanR} trong lĩnh vực ${s.vi.toLowerCase()}. Năng lượng ${s.theme} bị cản trở, bạn cần nhìn lại cách mình đang sử dụng và cân bằng.`;
-      const imgFile = `${filePrefixMap[s.en]}${numMap[r.en]}.jpg`;
-      tarotCards.push({
-        id: id++,
-        name: `${r.en} of ${s.en}`,
-        vietnameseName: `${r.vi} ${s.vi}`,
-        symbol: s.sym,
-        image: `https://commons.wikimedia.org/wiki/Special:FilePath/${imgFile}`,
-        upright: { meaning: uprightMean, yesNo: yesU, keywords: r.kwU },
-        reversed: { meaning: reversedMean, yesNo: yesR, keywords: r.kwR }
-      });
-    }
-  }
-})();
-const positions = [
-  {title:"Quá khứ", sub:"Gốc rễ", desc:"Năng lượng đã qua ảnh hưởng đến hiện tại"},
-  {title:"Hiện tại", sub:"Thử thách", desc:"Bài học và trở ngại đang diễn ra"},
-  {title:"Tương lai", sub:"Lời khuyên", desc:"Hướng đi và kết quả tiềm năng"}
-];
-let shuffled = [];
-let picked = [null,null,null];
-let pickedReversed = [false,false,false];
-let phase = "idle";
-let fanCardCount = 15;
-const deckStack = document.getElementById('deckStack');
-const fanContainer = document.getElementById('fanContainer');
-const deckView = document.getElementById('deckView');
-const fanView = document.getElementById('fanView');
-const shuffleBtn = document.getElementById('shuffleBtn');
-const revealBtn = document.getElementById('revealBtn');
-const resetBtn = document.getElementById('resetBtn');
-const readAgainBtn = document.getElementById('readAgainBtn');
-const headerReset = document.getElementById('headerReset');
-const instructionTitle = document.getElementById('instructionTitle');
-const instructionText = document.getElementById('instructionText');
-const pickCounter = document.getElementById('pickCounter');
-const dot1 = document.getElementById('dot1');
-const dot2 = document.getElementById('dot2');
-const dot3 = document.getElementById('dot3');
-const step1Label = document.getElementById('step1Label');
-const step2Label = document.getElementById('step2Label');
-const step3Label = document.getElementById('step3Label');
-const resultsSection = document.getElementById('resultsSection');
-const resultsGrid = document.getElementById('resultsGrid');
-const overallBox = document.getElementById('overallBox');
-const questionInput = document.getElementById('questionInput');
-const questionBadge = document.getElementById('questionBadge');
-const flyLayer = document.getElementById('flyLayer');
-
-function shuffleArray(a){
-  const arr=[...a];
-  for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]] }
-  return arr;
-}
-function renderDeckStack(){
-  deckStack.innerHTML='';
-  for(let i=0;i<9;i++){
-    const el=document.createElement('div');
-    el.className='absolute inset-0 card-back rounded-[18px]';
-    el.style.transform=`translate(${i*0.6}px, ${-i*0.7}px) rotate(${(i-4)*0.5}deg)`;
-    el.style.zIndex=i;
-    el.innerHTML=`
-      <div class="absolute inset-0 flex flex-col items-center justify-center gap-2">
-        <div class="w-9 h-9 rounded-full border border-[#E8C96A]/20 flex items-center justify-center bg-[#E8C96A]/10"><span class="text-[#E8C96A] text-[13px]">✦</span></div>
-        <div class="text-[7px] tracking-[0.18em] text-[#E8C96A]/60 font-semibold">TAROT</div>
-        <div class="w-8 h-px bg-[#E8C96A]/20"></div>
-        <div class="text-[6.5px] tracking-[0.16em] text-white/25">LU'S</div>
-      </div>`;
-    deckStack.appendChild(el);
-  }
-}
-renderDeckStack();
-function updateProgress(){
-  const c = picked.filter(Boolean).length;
-  if(phase==='idle' || phase==='shuffling'){
-    dot1.classList.add('active'); dot1.classList.remove('done');
-    dot2.classList.remove('active','done'); dot3.classList.remove('active','done');
-    step1Label.className='text-[#E8C96A]'; step2Label.className='text-white/30'; step3Label.className='text-white/30';
-  } else if(phase==='picking' || phase==='readyToReveal'){
-    dot1.classList.add('done'); dot1.classList.remove('active');
-    dot2.classList.add('active'); dot3.classList.remove('active','done');
-    step1Label.className='text-white/30'; step2Label.className='text-[#E8C96A]'; step3Label.className='text-white/30';
-  } else if(phase==='revealed'){
-    dot1.classList.add('done'); dot2.classList.add('done'); dot3.classList.add('active');
-    step1Label.className='text-white/30'; step2Label.className='text-white/30'; step3Label.className='text-[#E8C96A]';
-  }
-  if(c>0){ pickCounter.classList.remove('hidden'); pickCounter.textContent=`Đã chọn ${c}/3`; } else pickCounter.classList.add('hidden');
-}
-function buildFan(){
-  fanContainer.innerHTML='';
-  const n = fanCardCount;
-  const center=(n-1)/2;
-  const isMobile = window.innerWidth < 640;
-  // on very small screens reduce cards to avoid overflow
-  const visible = isMobile && window.innerWidth < 380 ? 11 : n;
-  shuffled.forEach((card, i)=>{
-    if(i>=visible) return;
-    const effCenter = (visible-1)/2;
-    const offset = (i-effCenter)*(isMobile? 24: 44);
-    const rot = (i-effCenter)*(isMobile? 2.8: 2.4);
-    const y = Math.abs(i-effCenter)*(isMobile? 5: 6);
-    const wrapper=document.createElement('div');
-    wrapper.className='fan-card';
-    wrapper.dataset.cardId=card.id;
-    wrapper.style.zIndex=10+i;
-    if(i===Math.floor(visible/2)) wrapper.style.zIndex=30;
-    wrapper.style.transform=`translateX(-50%) translateX(${offset}px) translateY(${y}px) rotate(${rot}deg)`;
-    wrapper.innerHTML=`
-      <div class="card-shell" style="pointer-events:none">
-        <div class="card-inner"><div class="card-face card-back">
-          <div class="absolute inset-0 flex flex-col items-center justify-center gap-1">
-            <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#E8C96A]/20 flex items-center justify-center bg-[#E8C96A]/10"><span class="text-[#E8C96A] text-[11px] sm:text-[13px]">✦</span></div>
-            <div class="text-[6px] sm:text-[7px] tracking-[0.18em] text-[#E8C96A]/60 font-semibold">LU'S</div>
-          </div>
-        </div></div>
-      </div>`;
-    wrapper.addEventListener('mouseenter', ()=>{ if(!wrapper.classList.contains('picked')) gsap.to(wrapper,{y:-14,duration:0.24,ease:"power2.out",overwrite:true}) });
-    wrapper.addEventListener('mouseleave', ()=>{ if(!wrapper.classList.contains('picked')) gsap.to(wrapper,{y:0,duration:0.24,ease:"power2.out"}) });
-    wrapper.addEventListener('click', ()=> handlePick(wrapper, card));
-    fanContainer.appendChild(wrapper);
-  });
-}
-function handleShuffle(){
-  if(phase==='shuffling') return;
-  phase='shuffling'; updateProgress();
-  instructionTitle.textContent='Đang xào bài...';
-  instructionText.textContent='Năng lượng đang được trộn lẫn - vũ trụ đang lắng nghe.';
-  shuffleBtn.disabled=true; shuffleBtn.classList.add('opacity-60');
-  const cards = deckStack.children;
-  const tl=gsap.timeline({onComplete:()=>{
-    shuffled = shuffleArray(tarotCards);
-    deckView.classList.add('hidden'); fanView.classList.remove('hidden');
-    buildFan();
-    gsap.fromTo(fanContainer.querySelectorAll('.fan-card'),{y:50,opacity:0},{y:0,opacity:1,duration:0.55,stagger:0.03,ease:"back.out(1.15)",onComplete:()=>{
-      document.querySelectorAll('.fan-card').forEach((el,idx)=>{
-        const vis = el.parentElement.children.length; const effCenter=(vis-1)/2; const isMobile=window.innerWidth<640;
-        const offset=(idx-effCenter)*(isMobile?24:44); const rot=(idx-effCenter)*(isMobile?2.8:2.4); const y=Math.abs(idx-effCenter)*(isMobile?5:6);
-        el.style.transform=`translateX(-50%) translateX(${offset}px) translateY(${y}px) rotate(${rot}deg)`;
-      });
-    }});
-    phase='picking'; updateProgress();
-    instructionTitle.textContent='Hãy chọn 3 lá bài';
-    instructionText.textContent='Tập trung vào câu hỏi và chọn 3 lá - trực giác sẽ dẫn lối.';
-    shuffleBtn.disabled=false; shuffleBtn.classList.remove('opacity-60');
-  }});
-  for(let i=0;i<cards.length;i++){ tl.to(cards[i],{x:(Math.random()-0.5)*140,y:(Math.random()-0.5)*40,rotation:(Math.random()-0.5)*18,duration:0.20,ease:"power2.inOut"},i*0.04); }
-  tl.to(cards,{x:0,y:0,rotation:(i)=>(i-4)*0.5,duration:0.24,ease:"power2.out",stagger:0.015});
-}
-function handlePick(wrapper, card){
-  if(phase!=='picking' && phase!=='readyToReveal') return;
-  if(wrapper.classList.contains('picked')) return;
-  const nextIndex = picked.findIndex(p=>p===null); if(nextIndex===-1) return;
-  wrapper.classList.add('picked'); wrapper.style.pointerEvents='none';
-  gsap.to(wrapper,{opacity:0,scale:0.88,duration:0.16});
-  const rect = wrapper.getBoundingClientRect();
-  const slotEl = document.getElementById(`slot-${nextIndex}`);
-  const slotRect = slotEl.getBoundingClientRect();
-  const fly = document.createElement('div');
-  fly.style.position='fixed'; fly.style.left=rect.left+'px'; fly.style.top=rect.top+'px'; fly.style.width=rect.width+'px'; fly.style.height=rect.height+'px'; fly.style.zIndex=60;
-  fly.innerHTML=`<div class="card-shell" style="width:100%;height:100%"><div class="card-inner"><div class="card-face card-back"><div class="absolute inset-0 flex items-center justify-center"><span class="text-[#E8C96A]">✦</span></div></div></div></div>`;
-  flyLayer.appendChild(fly);
-  picked[nextIndex]=card;
-  gsap.to(fly,{left:slotRect.left,top:slotRect.top,width:slotRect.width,height:slotRect.height,duration:0.58,ease:"power3.inOut",onComplete:()=>{
-    fly.remove(); renderSlot(nextIndex, card,false); slotEl.classList.add('filled');
-    if(picked.every(p=>p!==null)){
-      phase='readyToReveal';
-      revealBtn.disabled=false;
-      revealBtn.classList.remove('bg-white/[0.06]','text-white/25','border','border-white/10','cursor-not-allowed');
-      revealBtn.classList.add('bg-[#E8C96A]','text-slate-900','hover:bg-[#F2D57E]');
-      revealBtn.innerHTML=`<span>✧</span> Lật bài - Xem giải nghĩa`;
-      instructionTitle.textContent='Đã chọn đủ 3 lá - sẵn sàng lật bài';
-      instructionText.textContent='Nhấn “Lật bài” để khám phá thông điệp. Mỗi lá 50% xuôi / ngược.';
-      gsap.fromTo(revealBtn,{scale:1},{scale:1.03,duration:0.3,yoyo:true,repeat:1});
-    } else {
-      instructionTitle.textContent=`Đã chọn ${picked.filter(Boolean).length}/3 - chọn tiếp`;
-      gsap.fromTo(slotEl,{scale:0.97},{scale:1,duration:0.32,ease:"back.out(1.4)"});
-    }
-    updateProgress();
-  }});
-}
-function renderSlot(index, card, showFront){
-  const slotEl=document.getElementById(`slot-${index}`);
-  if(!card){ slotEl.innerHTML=`<div class="slot-inner flex-col gap-1"><span class="text-[10px] tracking-[0.14em] font-semibold text-white/25">0${index+1}</span><span class="text-[9px] tracking-[0.16em] font-semibold text-[#E8C96A]/70">CHỜ CHỌN</span></div>`; slotEl.classList.remove('filled'); return; }
-  if(!showFront){
-    slotEl.innerHTML=`
-      <div class="card-shell flipped" style="width:100%;height:100%"><div class="card-inner">
-        <div class="card-face card-back"><div class="absolute inset-0 flex flex-col items-center justify-center gap-1.5"><div class="w-9 h-9 rounded-full border border-[#E8C96A]/20 flex items-center justify-center bg-[#E8C96A]/10"><span class="text-[#E8C96A] text-[13px]">✦</span></div><div class="text-[7px] tracking-[0.18em] text-[#E8C96A]/60 font-semibold">LU'S</div></div></div>
-        <div class="card-face card-front p-2.5 flex flex-col"><div class="text-[7px] tracking-[0.14em] text-amber-700 font-semibold">${positions[index].title.toUpperCase()}</div><div class="flex-1 flex flex-col items-center justify-center gap-1 text-center"><div class="w-11 h-11 rounded-full bg-gradient-to-br from-violet-600 to-indigo-700 flex items-center justify-center text-lg">${card.symbol}</div><div class="font-semibold text-[11px] text-slate-900">${card.vietnameseName}</div><div class="text-[10px] text-slate-500">${card.name}</div></div><div class="h-px bg-amber-200/50"></div><div class="text-[7px] text-center tracking-[0.1em] text-amber-700/70 font-medium pt-1">MAJOR ARCANA - ${String(card.id).padStart(2,'0')}</div></div>
-      </div></div>`;
-    slotEl.querySelector('.card-shell').classList.remove('flipped'); slotEl.dataset.cardId=card.id; return;
-  }
-}
-function handleReveal(){
-  if(phase!=='readyToReveal') return;
-  phase='revealed'; updateProgress();
-  revealBtn.disabled=true; revealBtn.classList.add('opacity-50','cursor-not-allowed');
-  instructionTitle.textContent='Bài đã được lật - khám phá thông điệp';
-  instructionText.textContent='Mỗi vị trí mang một thông điệp riêng.';
-  pickedReversed = picked.map(()=> Math.random()<0.5);
-  picked.forEach((card, idx)=>{
-    const slotEl=document.getElementById(`slot-${idx}`); const isReversed = pickedReversed[idx];
-    setTimeout(()=>{
-      slotEl.innerHTML=`
-        <div class="card-shell ${isReversed?'reversed':''}" style="width:100%;height:100%"><div class="card-inner">
-          <div class="card-face card-back"><div class="absolute inset-0 flex items-center justify-center"><span class="text-[#E8C96A] text-lg">✦</span></div></div>
-          <div class="card-face card-front ${isReversed?'reversed':''} p-0 overflow-hidden">
-            <img src="${card.image}" alt="${card.vietnameseName}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="hidden w-full h-full items-center justify-center bg-[#FFFCF0] text-slate-900 text-lg">${card.symbol}</div>
-          </div>
-        </div></div>`;
-      requestAnimationFrame(()=> setTimeout(()=> slotEl.querySelector('.card-shell').classList.add('flipped'),30));
-      gsap.fromTo(slotEl,{scale:0.97},{scale:1,duration:0.45,ease:"back.out(1.3)"});
-      if(idx===2) setTimeout(()=> buildResults(),820);
-    }, idx*380);
-  });
-}
-function buildResults(){
-  resultsSection.classList.remove('hidden'); resultsGrid.innerHTML='';
-  const question = questionInput.value.trim();
-  const yesCount = picked.map((c,i)=> pickedReversed[i]? c.reversed.yesNo : c.upright.yesNo).filter(v=>v==='YES').length;
-  const noCount = picked.map((c,i)=> pickedReversed[i]? c.reversed.yesNo : c.upright.yesNo).filter(v=>v==='NO').length;
-  let overallTitle, overallDesc, overallColor;
-  if(yesCount>=2){ overallTitle='Năng lượng tổng thể: TÍCH CỰC - CÂU TRẢ LỜI LÀ CÓ'; overallDesc='Hai hoặc ba lá nghiêng về YES. Vũ trụ đang ủng hộ bạn tiến bước.'; overallColor='bg-emerald-500'; }
-  else if(noCount>=2){ overallTitle='Năng lượng tổng thể: THỬ THÁCH - CẦN CÂN NHẮC'; overallDesc='Năng lượng NO chiếm ưu thế. Chậm lại và chuẩn bị kỹ hơn.'; overallColor='bg-rose-500'; }
-  else { overallTitle='Năng lượng tổng thể: TRUNG LẬP - CÓ THỂ / TÙY DUYÊN'; overallDesc='Thông điệp là MAYBE - kết quả phụ thuộc vào lựa chọn của bạn.'; overallColor='bg-amber-500'; }
-  overallBox.innerHTML=`
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <div class="flex-1">
-        <div class="inline-flex px-3 py-1 rounded-full ${overallColor} text-white text-[11px] font-bold tracking-[0.08em]">${overallTitle}</div>
-        <p class="text-white/60 text-[13px] leading-relaxed mt-2">${overallDesc}</p>
-        ${question?`<div class="mt-2 text-[12px] text-[#E8C96A]/90"><span class="text-white/30">Câu hỏi:</span> “${question}”</div>`:''}
-      </div>
-      <div class="flex gap-2 shrink-0">
-        <div class="px-3 py-2 rounded-xl bg-white text-slate-900 text-center min-w-[66px]"><div class="text-[9px] tracking-[0.12em] font-bold text-slate-500">YES</div><div class="text-base font-bold text-emerald-600">${yesCount}/3</div></div>
-        <div class="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-center min-w-[66px]"><div class="text-[9px] tracking-[0.12em] font-bold text-white/40">MAYBE</div><div class="text-base font-bold text-white">${3-yesCount-noCount}/3</div></div>
-        <div class="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-center min-w-[66px]"><div class="text-[9px] tracking-[0.12em] font-bold text-white/40">NO</div><div class="text-base font-bold text-rose-400">${noCount}/3</div></div>
-      </div>
-    </div>`;
-  picked.forEach((card, idx)=>{
-    const isReversed = pickedReversed[idx]; const data = isReversed? card.reversed : card.upright; const pos = positions[idx];
-    let badgeClass='', badgeText='';
-    if(data.yesNo==='YES'){ badgeClass='bg-emerald-500 text-white'; badgeText='YES - CÓ'; }
-    else if(data.yesNo==='NO'){ badgeClass='bg-rose-500 text-white'; badgeText='NO - KHÔNG'; }
-    else { badgeClass='bg-amber-400 text-slate-900'; badgeText='MAYBE - CÓ THỂ'; }
-    const el=document.createElement('div');
-    el.className='glass-minimal rounded-2xl overflow-hidden flex flex-col';
-    el.innerHTML=`
-      <div class="p-5 flex-1 flex flex-col">
-        <span class="inline-flex px-2.5 py-1 rounded-full text-[10px] font-bold tracking-[0.08em] ${badgeClass} self-start">${badgeText}</span>
-        <div class="mt-3 flex gap-3">
-          <div class="w-[64px] h-[96px] sm:w-[72px] sm:h-[108px] rounded-lg overflow-hidden border border-white/10 shrink-0 bg-white">
-            <img src="${card.image}" alt="${card.vietnameseName}" class="w-full h-full object-cover ${isReversed?'rotate-180':''}" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="text-[10px] tracking-[0.12em] font-semibold text-[#E8C96A]">${pos.title.toUpperCase()} - ${pos.sub.toUpperCase()}</div>
-            <div class="font-display font-bold text-[15px] leading-tight mt-1 text-white">${card.vietnameseName} <span class="font-normal text-white/45 text-[12px]">- ${card.name}</span></div>
-            <div class="text-[11px] text-white/30 mt-0.5">${pos.desc}</div>
-          </div>
-        </div>
-        <div class="flex items-center gap-2 mt-3">
-          <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${isReversed?'bg-rose-500/15 text-rose-300 border border-rose-500/20':'bg-emerald-500/15 text-emerald-300 border border-emerald-500/20'}">${isReversed?'DẠNG NGƯỢC': 'DẠNG XUÔI'}</span>
-          <span class="text-[11px] text-white/30">${isReversed?'Năng lượng đảo chiều':'Năng lượng thuận'}</span>
-        </div>
-        <div class="flex flex-wrap gap-1.5 mt-3">
-          ${data.keywords.map(k=>`<span class="px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[11px] text-white/70">#${k}</span>`).join('')}
-        </div>
-        <div class="mt-4 p-3.5 rounded-xl bg-white/[0.04] border border-white/10">
-          <div class="text-[10px] font-bold tracking-[0.12em] text-[#E8C96A] mb-1">GIẢI NGHĨA</div>
-          <p class="text-[13px] leading-relaxed text-white/75">${data.meaning}</p>
-        </div>
-        <div class="mt-3 pt-3 border-t border-white/10">
-          <div class="text-[11px] font-medium text-white/45">Lời khuyên cho vị trí ${pos.title.toLowerCase()}:</div>
-          <p class="text-[12px] leading-relaxed text-white/60 mt-1">${getAdvice(idx, card, isReversed)}</p>
-        </div>
-      </div>`;
-    resultsGrid.appendChild(el);
-  });
-  setTimeout(()=> resultsSection.scrollIntoView({behavior:'smooth',block:'start'}),180);
-  resetBtn.classList.remove('hidden');
-  document.getElementById('hintText').textContent='Cuộn xuống để xem giải nghĩa chi tiết.';
-  gsap.from(resultsGrid.children,{y:20,opacity:0,duration:0.45,stagger:0.08,ease:"power2.out"});
-}
-function getAdvice(idx, card, rev){
-  const adv=[
-    rev?`Quá khứ với năng lượng ngược cho thấy bài học chưa khép lại. Hãy nhìn lại mô thức cũ của ${card.vietnameseName} và tha thứ cho bản thân trước khi tiến tới.`:`Quá khứ với ${card.vietnameseName} là nền tảng. Hãy trân trọng bài học đó - nó chính là gốc rễ nâng đỡ hiện tại.`,
-    rev?`Hiện tại đang bị thử thách bởi bóng tối của ${card.vietnameseName}. Đừng chống lại, hãy quan sát và điều chỉnh với tỉnh thức.`:`Hiện tại, ${card.vietnameseName} mời bạn hành động với phẩm chất tích cực của lá bài. Đây là chìa khóa vượt qua thử thách.`,
-    rev?`Tương lai ngược nhắc bạn chuẩn bị kỹ hơn. Nếu tiếp tục như hiện tại, năng lượng ${card.vietnameseName} có thể đảo chiều - hãy chủ động thay đổi.`:`Tương lai với ${card.vietnameseName} rất hứa hẹn nếu bạn giữ vững năng lượng hiện tại. Vũ trụ đang mở lối - hãy bước đi với niềm tin.`
-  ]; return adv[idx];
-}
-function resetAll(){
-  picked=[null,null,null]; pickedReversed=[false,false,false]; shuffled=[]; phase='idle';
-  deckView.classList.remove('hidden'); fanView.classList.add('hidden'); fanContainer.innerHTML='';
-  for(let i=0;i<3;i++) renderSlot(i,null,false);
-  resultsSection.classList.add('hidden'); resultsGrid.innerHTML=''; overallBox.innerHTML='';
-  revealBtn.disabled=true;
-  revealBtn.className='px-7 py-3 rounded-full font-semibold text-[13px] bg-white/[0.06] text-white/25 border border-white/10 cursor-not-allowed transition inline-flex items-center gap-2';
-  revealBtn.innerHTML=`<span>✧</span> Lật bài <span class="text-[11px] font-normal opacity-60">(cần 3 lá)</span>`;
-  resetBtn.classList.add('hidden'); shuffleBtn.disabled=false; shuffleBtn.classList.remove('opacity-60');
-  instructionTitle.textContent='Sẵn sàng cho hành trình nhỏ?';
-  instructionText.textContent='Nhấn “Xào bài & Trải bài” để bắt đầu. Hít sâu và nghĩ về câu hỏi của bạn.';
-  document.getElementById('hintText').textContent='Chọn đủ 3 lá để mở khóa - mỗi lá 50% xuôi / ngược';
-  renderDeckStack(); updateProgress(); window.scrollTo({top:0,behavior:'smooth'});
-}
-shuffleBtn.addEventListener('click', handleShuffle);
-revealBtn.addEventListener('click', handleReveal);
-resetBtn.addEventListener('click', resetAll);
-readAgainBtn.addEventListener('click', resetAll);
-headerReset.addEventListener('click', resetAll);
-questionInput.addEventListener('input', ()=>{
-  const v=questionInput.value.trim();
-  if(!v){ questionBadge.classList.add('hidden'); return; }
-  questionBadge.textContent=`Câu hỏi: “${v.slice(0,36)}${v.length>36?'...':''}”`;
-  questionBadge.classList.remove('hidden');
-});
-updateProgress();
-let resizeTO; window.addEventListener('resize', ()=>{
-  clearTimeout(resizeTO); resizeTO=setTimeout(()=>{
-    if(phase==='picking' || phase==='readyToReveal') buildFan();
-  },120);
-});
-</script>
+<script src="js/main.js" defer></script>
 </body>
 </html>
