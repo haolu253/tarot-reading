@@ -161,7 +161,7 @@ body{ background:var(--bg); overflow-x:hidden; -webkit-font-smoothing:antialiase
 
   <!-- Stage minimal -->
   <div class="mt-6">
-    <div id="stageCard" class="glass-minimal rounded-[24px] sm:rounded-[28px] p-4 sm:p-7 relative overflow-hidden">
+    <div id="stageCard" class="glass-minimal rounded-[24px] sm:rounded-[28px] p-4 sm:p-7 pb-6 sm:pb-8 relative overflow-visible">
       <!-- Deck view -->
       <div id="deckView" class="relative flex flex-col items-center py-6 sm:py-8">
         <div id="deckStack" class="relative w-[160px] h-[210px] sm:w-[180px] sm:h-[238px]"></div>
@@ -183,8 +183,8 @@ body{ background:var(--bg); overflow-x:hidden; -webkit-font-smoothing:antialiase
       </div>
 
       <!-- Slots minimal  -->
-      <div class="mt-8">
-        <div class="grid grid-cols-3 gap-2.5 sm:gap-5 max-w-[560px] mx-auto">
+      <div class="mt-10 sm:mt-12">
+        <div class="grid grid-cols-3 gap-2.5 sm:gap-5 max-w-[560px] mx-auto items-start">
           <div class="flex flex-col items-center gap-2">
             <div id="slot-0" class="slot"><div class="slot-inner flex-col gap-1"><span class="text-[10px] tracking-[0.14em] font-semibold text-white/25">01</span><span class="slot-label">CHỜ CHỌN</span></div></div>
             <div class="text-center"><div class="text-[11px] font-semibold tracking-[0.08em] text-white/70">QUÁ KHỨ</div><div class="text-[11px] text-white/30">Gốc rễ</div></div>
@@ -199,12 +199,12 @@ body{ background:var(--bg); overflow-x:hidden; -webkit-font-smoothing:antialiase
           </div>
         </div>
 
-        <div class="flex flex-col items-center gap-3 mt-7">
-          <button id="revealBtn" disabled class="px-7 py-3 rounded-full font-semibold text-[13px] bg-white/[0.06] text-white/25 border border-white/10 cursor-not-allowed transition inline-flex items-center gap-2">
+        <div class="flex flex-col items-center gap-3 mt-8 sm:mt-10 pt-4 relative z-10 clear-both">
+          <button id="revealBtn" disabled class="px-7 py-3 rounded-full font-semibold text-[13px] bg-white/[0.06] text-white/25 border border-white/10 cursor-not-allowed transition inline-flex items-center gap-2 relative z-10">
             <span>✧</span> Lật bài <span class="text-[11px] font-normal opacity-60">(cần 3 lá)</span>
           </button>
-          <button id="resetBtn" class="hidden px-5 py-2 rounded-full minimal-border bg-white text-slate-900 text-[13px] font-semibold hover:bg-zinc-100 transition">↻ Rút bài lượt mới</button>
-          <p id="hintText" class="text-[11px] text-white/25 text-center">Chọn đủ 3 lá để mở khóa - mỗi lá 50% xuôi / ngược</p>
+          <button id="resetBtn" class="hidden px-5 py-2 rounded-full minimal-border bg-white text-slate-900 text-[13px] font-semibold hover:bg-zinc-100 transition relative z-10">↻ Rút bài lượt mới</button>
+          <p id="hintText" class="text-[11px] text-white/25 text-center relative z-10">Chọn đủ 3 lá để mở khóa - mỗi lá 50% xuôi / ngược</p>
         </div>
       </div>
     </div>
