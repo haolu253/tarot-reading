@@ -262,6 +262,11 @@ const tarotCards = [
   {id:20, name:"Judgement", vietnameseName:"Phán Xét", symbol:"♫", upright:{meaning:"Tiếng gọi thức tỉnh, tha thứ và tái sinh. Đã đến lúc nhìn lại, buông bỏ phán xét cũ và bước sang chương mới với sự rõ ràng.", yesNo:"YES", keywords:["Thức tỉnh","Tái sinh","Tha thứ","Tiếng gọi"]}, reversed:{meaning:"Tự phán xét quá khắt khe, bỏ lỡ tiếng gọi hoặc sợ thay đổi. Bạn đang trì hoãn sự tha thứ cho bản thân.", yesNo:"NO", keywords:["Tự phán xét","Bỏ lỡ","Sợ thay đổi","Trì hoãn"]}},
   {id:21, name:"The World", vietnameseName:"Thế Giới", symbol:"◉", upright:{meaning:"Hoàn thành, viên mãn và hội nhập. Một chu kỳ khép lại trọn vẹn, bạn sẵn sàng bước sang tầm cao mới với sự toàn vẹn.", yesNo:"YES", keywords:["Hoàn thành","Viên mãn","Hội nhập","Thành tựu"]}, reversed:{meaning:"Chưa hoàn tất, thiếu khép lại hoặc cảm giác dang dở. Bạn gần đích nhưng cần thêm một bước cuối để trọn vẹn.", yesNo:"MAYBE", keywords:["Dang dở","Chưa hoàn tất","Thiếu khép lại","Trì hoãn"]}},
 ];
+// gán image cho 22 Ẩn Chính (Rider-Waite Wikimedia - Special:FilePath)
+const majorFiles = ["RWS_Tarot_00_Fool.jpg","RWS_Tarot_01_Magician.jpg","RWS_Tarot_02_High_Priestess.jpg","RWS_Tarot_03_Empress.jpg","RWS_Tarot_04_Emperor.jpg","RWS_Tarot_05_Hierophant.jpg","RWS_Tarot_06_Lovers.jpg","RWS_Tarot_07_Chariot.jpg","RWS_Tarot_08_Strength.jpg","RWS_Tarot_09_Hermit.jpg","RWS_Tarot_10_Wheel_of_Fortune.jpg","RWS_Tarot_11_Justice.jpg","RWS_Tarot_12_Hanged_Man.jpg","RWS_Tarot_13_Death.jpg","RWS_Tarot_14_Temperance.jpg","RWS_Tarot_15_Devil.jpg","RWS_Tarot_16_Tower.jpg","RWS_Tarot_17_Star.jpg","RWS_Tarot_18_Moon.jpg","RWS_Tarot_19_Sun.jpg","RWS_Tarot_20_Judgement.jpg","RWS_Tarot_21_World.jpg"];
+tarotCards.forEach(c => {
+  if (c.id <= 21) c.image = `https://commons.wikimedia.org/wiki/Special:FilePath/${majorFiles[c.id]}`;
+});
 // --- Ẩn Phụ (Minor Arcana) - 56 lá, tự động sinh ---
 (() => {
   const suits = [
@@ -286,6 +291,8 @@ const tarotCards = [
     {en:"Queen", vi:"Nữ Hoàng", kwU:["Nuôi dưỡng","Thành thạo","Trực giác"], kwR:["Kiểm soát","Thiếu tự tin","Phụ thuộc"], meanU:"năng lượng nuôi dưỡng, thành thạo và trực giác tinh tế", meanR:"kiểm soát quá mức hoặc thiếu tự tin vào khả năng"},
     {en:"King", vi:"Vua", kwU:["Làm chủ","Lãnh đạo","Ổn định"], kwR:["Độc đoán","Thiếu trách nhiệm","Lạm quyền"], meanU:"sự làm chủ, lãnh đạo vững vàng và ổn định", meanR:"độc đoán, lạm quyền hoặc thiếu trách nhiệm"},
   ];
+  const numMap = {Ace:"01", Two:"02", Three:"03", Four:"04", Five:"05", Six:"06", Seven:"07", Eight:"08", Nine:"09", Ten:"10", Page:"11", Knight:"12", Queen:"13", King:"14"};
+  const filePrefixMap = {Wands:"Wands", Cups:"Cups", Swords:"Swords", Pentacles:"Pents"};
   let id = 22;
   for (const s of suits) {
     for (const r of ranks) {
@@ -296,11 +303,13 @@ const tarotCards = [
       const yesR = isWandsCups ? "MAYBE" : "NO";
       const uprightMean = `Năng lượng ${s.theme} kết hợp với ${r.meanU}. Lá ${r.vi} ${s.vi} cho thấy giai đoạn liên quan đến ${s.vi.toLowerCase()} đang được kích hoạt, mang đến cơ hội để bạn thể hiện và cân bằng.`;
       const reversedMean = `Khi ngược, lá ${r.vi} ${s.vi} cho thấy ${r.meanR} trong lĩnh vực ${s.vi.toLowerCase()}. Năng lượng ${s.theme} bị cản trở, bạn cần nhìn lại cách mình đang sử dụng và cân bằng.`;
+      const imgFile = `${filePrefixMap[s.en]}${numMap[r.en]}.jpg`;
       tarotCards.push({
         id: id++,
         name: `${r.en} of ${s.en}`,
         vietnameseName: `${r.vi} ${s.vi}`,
         symbol: s.sym,
+        image: `https://commons.wikimedia.org/wiki/Special:FilePath/${imgFile}`,
         upright: { meaning: uprightMean, yesNo: yesU, keywords: r.kwU },
         reversed: { meaning: reversedMean, yesNo: yesR, keywords: r.kwR }
       });
@@ -501,11 +510,14 @@ function handleReveal(){
           <div class="card-face card-front ${isReversed?'reversed':''} p-2.5 flex flex-col relative">
             ${isReversed?'<div class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded-full bg-slate-900 text-[#E8C96A] text-[7px] font-bold tracking-[0.08em]">NGƯỢC</div>':'<div class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded-full bg-emerald-500 text-white text-[7px] font-bold tracking-[0.08em]">XUÔI</div>'}
             <div class="text-[7px] tracking-[0.14em] text-amber-700 font-semibold">${positions[idx].title.toUpperCase()}</div>
-            <div class="flex-1 flex flex-col items-center justify-center gap-1 text-center pt-1.5">
-              <div class="w-11 h-11 rounded-full bg-gradient-to-br ${isReversed?'from-slate-700 to-slate-900':'from-violet-600 to-indigo-700'} flex items-center justify-center text-lg">${card.symbol}</div>
-              <div class="font-semibold text-[11px] text-slate-900 leading-tight min-h-[28px] flex items-center justify-center text-center">${card.vietnameseName}</div>
-              <div class="text-[10px] text-slate-500 min-h-[14px]">${card.name}</div>
-              <div class="text-[8px] font-semibold tracking-[0.06em] min-h-[10px] ${isReversed?'text-rose-600':'text-transparent'}">${isReversed?'DẠNG NGƯỢC - 180°':'DẠNG NGƯỢC - 180°'}</div>
+            <div class="flex-1 flex flex-col items-center justify-center gap-1 text-center pt-1">
+              <div class="w-[72px] h-[102px] sm:w-[80px] sm:h-[114px] rounded-[8px] overflow-hidden border border-amber-200/60 shadow-sm bg-white shrink-0">
+                <img src="${card.image}" alt="${card.vietnameseName}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="hidden w-full h-full items-center justify-center bg-gradient-to-br from-violet-600 to-indigo-700 text-white text-lg">${card.symbol}</div>
+              </div>
+              <div class="font-semibold text-[11px] text-slate-900 leading-tight min-h-[24px] flex items-center justify-center text-center px-1">${card.vietnameseName}</div>
+              <div class="text-[9px] text-slate-500 min-h-[12px]">${card.name}</div>
+              <div class="text-[7px] font-semibold tracking-[0.06em] min-h-[9px] ${isReversed?'text-rose-600':'text-transparent'}">${isReversed?'DẠNG NGƯỢC - 180°':'DẠNG NGƯỢC - 180°'}</div>
             </div>
             <div class="h-px bg-amber-200/50 mt-1.5"></div>
             <div class="text-[7px] text-center tracking-[0.1em] text-amber-700/70 font-medium pt-1">MAJOR ARCANA - ${String(card.id).padStart(2,'0')}</div>
@@ -550,10 +562,15 @@ function buildResults(){
     el.innerHTML=`
       <div class="p-5 flex-1 flex flex-col">
         <span class="inline-flex px-2.5 py-1 rounded-full text-[10px] font-bold tracking-[0.08em] ${badgeClass} self-start">${badgeText}</span>
-        <div class="mt-3">
-          <div class="text-[10px] tracking-[0.12em] font-semibold text-[#E8C96A]">${pos.title.toUpperCase()} - ${pos.sub.toUpperCase()}</div>
-          <div class="font-display font-bold text-[15px] leading-tight mt-1 text-white">${card.vietnameseName} <span class="font-normal text-white/45 text-[12px]">- ${card.name}</span></div>
-          <div class="text-[11px] text-white/30 mt-0.5">${pos.desc}</div>
+        <div class="mt-3 flex gap-3">
+          <div class="w-[64px] h-[96px] sm:w-[72px] sm:h-[108px] rounded-lg overflow-hidden border border-white/10 shrink-0 bg-white">
+            <img src="${card.image}" alt="${card.vietnameseName}" class="w-full h-full object-cover ${isReversed?'rotate-180':''}" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-[10px] tracking-[0.12em] font-semibold text-[#E8C96A]">${pos.title.toUpperCase()} - ${pos.sub.toUpperCase()}</div>
+            <div class="font-display font-bold text-[15px] leading-tight mt-1 text-white">${card.vietnameseName} <span class="font-normal text-white/45 text-[12px]">- ${card.name}</span></div>
+            <div class="text-[11px] text-white/30 mt-0.5">${pos.desc}</div>
+          </div>
         </div>
         <div class="flex items-center gap-2 mt-3">
           <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${isReversed?'bg-rose-500/15 text-rose-300 border border-rose-500/20':'bg-emerald-500/15 text-emerald-300 border border-emerald-500/20'}">${isReversed?'DẠNG NGƯỢC': 'DẠNG XUÔI'}</span>
