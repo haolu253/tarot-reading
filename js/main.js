@@ -369,9 +369,9 @@ function buildResults(){
     const el=document.createElement('div');
     el.className='glass-minimal rounded-2xl overflow-hidden flex flex-col';
     el.innerHTML=`
-      <div class="p-5 flex-1 flex flex-col">
-        <span class="inline-flex px-2.5 py-1 rounded-full text-[10px] font-bold tracking-[0.08em] ${badgeClass} self-start">${badgeText}</span>
-        <div class="mt-3 flex gap-3">
+      <div class="p-5 flex-1 grid">
+        <span class="inline-flex w-fit max-w-fit px-2.5 py-1 rounded-full text-[10px] font-bold tracking-[0.08em] ${badgeClass} self-start">${badgeText}</span>
+        <div class="flex gap-3">
           <div class="w-[64px] h-[96px] sm:w-[72px] sm:h-[108px] rounded-lg overflow-hidden border border-white/10 shrink-0 bg-white">
             <img src="${card.image}" alt="${card.vietnameseName}" class="w-full h-full object-cover ${isReversed?'rotate-180':''}" loading="lazy" onerror="this.style.display='none'">
           </div>
@@ -381,18 +381,18 @@ function buildResults(){
             <div class="text-[11px] text-white/30 mt-0.5">${pos.desc}</div>
           </div>
         </div>
-        <div class="flex items-center gap-2 mt-3">
+        <div class="flex items-center gap-2">
           <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${isReversed?'bg-rose-500/15 text-rose-300 border border-rose-500/20':'bg-emerald-500/15 text-emerald-300 border border-emerald-500/20'}">${isReversed?'DẠNG NGƯỢC': 'DẠNG XUÔI'}</span>
           <span class="text-[11px] text-white/30">${isReversed?'Năng lượng đảo chiều':'Năng lượng thuận'}</span>
         </div>
-        <div class="flex flex-wrap gap-1.5 mt-3">
-          ${data.keywords.map(k=>`<span class="px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[11px] text-white/70">#${k}</span>`).join('')}
+        <div class="flex flex-wrap gap-1.5">
+          ${data.keywords.map(k=>`<span class="px-2.5 h-[26px] inline-flex items-center justify-center rounded-full bg-white/[0.06] border border-white/10 text-[11px] leading-none text-white/70">#${k}</span>`).join('')}
         </div>
-        <div class="mt-4 p-3.5 rounded-xl bg-white/[0.04] border border-white/10">
-          <div class="text-[10px] font-bold tracking-[0.12em] text-[#E8C96A] mb-1">GIẢI NGHĨA</div>
-          <p class="text-[13px] leading-relaxed text-white/75">${data.meaning}</p>
+        <div class="pt-3 border-t border-white/10">
+          <div class="text-[11px] font-medium text-white/70">Giải nghĩa:</div>
+          <p class="text-[12px] leading-relaxed text-white/90 mt-1">${data.meaning}</p>
         </div>
-        <div class="mt-3 pt-3 border-t border-white/10">
+        <div class="pt-3 border-t border-white/10">
           <div class="text-[11px] font-medium text-white/45">Lời khuyên cho vị trí ${pos.title.toLowerCase()}:</div>
           <p class="text-[12px] leading-relaxed text-white/60 mt-1">${getAdvice(idx, card, isReversed)}</p>
         </div>

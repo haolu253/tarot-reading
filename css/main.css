@@ -55,8 +55,38 @@ body{ background:var(--bg); overflow-x:hidden; max-width:100vw; -webkit-font-smo
 .slot, .slot .card-shell, .slot .card-inner, .slot .card-front{ min-height:0; min-width:0 }
 .slot .card-shell{ flex:1; width:100% !important; height:100% !important; min-height:0 }
 .slot .card-front{ overflow:hidden }
-#resultsGrid{ align-items:stretch; grid-auto-rows:1fr }
-#resultsGrid > div{ height:100% }
+#resultsGrid{
+  display:grid;
+  grid-template-columns: repeat(1, minmax(0,1fr));
+  gap:1rem;
+  align-items: stretch;
+}
+#resultsGrid > div > div{
+  display:grid;
+  gap:0.75rem;
+  align-content:start;
+}
+@media(min-width:768px){
+  #resultsGrid{
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    grid-template-rows: auto auto auto auto 1fr auto;
+  }
+  #resultsGrid > div{
+  display:grid;
+  grid-template-rows: subgrid;
+  grid-row: span 6;
+    height:100%;
+  }
+  #resultsGrid > div > div{
+    display:grid;
+    grid-template-rows: subgrid;
+    grid-row: span 6;
+    gap:0;
+    row-gap:0.75rem;
+    align-content: start;
+    height:100%;
+  }
+}
 .slot-inner{
   width:100%;height:100%; border-radius:18px; border:1.4px dashed rgba(232,201,106,0.18);
   background:rgba(255,255,255,0.02); display:flex;align-items:center;justify-content:center; position:relative; transition:all 0.3s
