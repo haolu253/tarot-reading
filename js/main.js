@@ -435,9 +435,14 @@ questionInput.addEventListener('input', ()=>{
   questionBadge.textContent=`Câu hỏi: “${v.slice(0,36)}${v.length>36?'...':''}”`;
   questionBadge.classList.remove('hidden');
 });
+const clearBtn=document.getElementById('clearQuestionBtn');
+function toggleClear(){ if(!clearBtn) return; const has=!!questionInput.value.trim(); clearBtn.classList.toggle('hidden', !has); clearBtn.classList.toggle('flex', has); }
+questionInput.addEventListener('input', toggleClear);
+if(clearBtn) clearBtn.addEventListener('click', ()=>{ questionInput.value=''; questionBadge.classList.add('hidden'); clearBtn.classList.add('hidden'); clearBtn.classList.remove('flex'); questionInput.focus(); updatePlaceholder(); });
+toggleClear();
 function updatePlaceholder(){ questionInput.placeholder = window.innerWidth < 640 ? "Bạn muốn hỏi điều gì?..." : "Bạn muốn hỏi điều gì? (ví dụ: Con đường sự nghiệp sắp tới...)"; }
 updatePlaceholder();
-window.addEventListener('resize', updatePlaceholder);
+window.addEventListener('resize', ()=>{ updatePlaceholder(); toggleClear(); });
 document.getElementById('copyGptBtn').addEventListener('click', async ()=>{
   const q = questionInput.value.trim() || "Không có câu hỏi cụ thể";
   const cards = picked.map((c,i)=>{

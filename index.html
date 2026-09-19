@@ -77,11 +77,11 @@
     <span id="questionBadge" class="hidden px-3 py-1 rounded-full bg-[#E8C96A] text-slate-900 text-xs font-semibold"></span>
   </div>
 
-  <!-- Question - redesigned to match -->
+  <!-- Question - no left icon, with clear button on right -->
   <div id="questionBox" class="mt-4">
-    <div class="relative group">
-      <div class="absolute left-3.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-[#E8C96A]/10 border border-[#E8C96A]/15 flex items-center justify-center text-[#E8C96A] text-[11px] pointer-events-none group-focus-within:bg-[#E8C96A]/15 group-focus-within:border-[#E8C96A]/25 transition">✦</div>
-      <input id="questionInput" placeholder="Bạn muốn hỏi điều gì? (ví dụ: Con đường sự nghiệp sắp tới...)" class="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-white/[0.035] border border-white/[0.07] text-[13px] placeholder:text-white/30 text-white focus:outline-none focus:border-[#E8C96A]/30 focus:bg-white/[0.05] focus:shadow-[0_0_0_3px_rgba(232,201,106,0.08)] transition">
+    <div class="relative">
+      <input id="questionInput" placeholder="Bạn muốn hỏi điều gì? (ví dụ: Con đường sự nghiệp sắp tới...)" class="w-full pl-4 pr-12 py-3.5 rounded-2xl bg-white/[0.035] border border-white/[0.07] text-[13px] placeholder:text-white/30 text-white focus:outline-none focus:border-[#E8C96A]/30 focus:bg-white/[0.05] focus:shadow-[0_0_0_3px_rgba(232,201,106,0.08)] transition">
+      <button id="clearQuestionBtn" type="button" aria-label="Xóa câu hỏi" class="hidden absolute right-4 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/[0.06] hover:bg-white/10 border border-white/10 text-white/60 hover:text-white flex items-center justify-center text-[14px] leading-none transition">×</button>
     </div>
   </div>
 
